@@ -33,10 +33,20 @@ struct MinHeap {
 
     void upheap(int pos, int weightArr[]) {
         // TODO: swap child upward while smaller than parent
+        if (pos == 0) return;
+
     }
 
     void downheap(int pos, int weightArr[]) {
         // TODO: swap parent downward while larger than any child
+    }
+
+    static int getParent(int idx) {
+        return (idx - 1) / 2;
+    }
+
+    static int getChild(int idx) {
+        return idx * 2 + 1;
     }
 };
 
