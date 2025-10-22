@@ -58,6 +58,18 @@ struct MinHeap {
     static int getChild(int idx, int child) {
         return idx * 2 + child;
     }
+
+    int check(int freq[]) {
+        for (int i = 0; i < size; ++i) {
+            int child1 = getChild(i, 1);
+            int child2 = getChild(i, 2);
+            if (freq[data[i]] > freq[data[child1]] || freq[data[i]] > freq[data[child2]]) {
+                return 1;
+            }
+        }
+
+        return 0;
+    }
 };
 
 #endif
