@@ -38,9 +38,7 @@ struct MinHeap {
         int parent = getParent(pos);
         int currPos = pos;
         while (weightArr[data[currPos]] < weightArr[data[parent]]) {
-            int temp = data[parent];
-            data[parent] = data[currPos];
-            data[currPos] = temp;
+            swapData(parent, currPos);
 
             currPos = parent;
             parent = getParent(currPos);
@@ -49,6 +47,34 @@ struct MinHeap {
 
     void downheap(int pos, int weightArr[]) {
         // TODO: swap parent downward while larger than any child
+        int currPos = pos;
+        int child1 = getChild(currPos, 1);
+        int child2 = getChild(currPos, 2);
+        while (child1 < size) {
+            if (child1 < size && child2 < size) {
+                int smallest = weightArr[data[child2]] < weightArr[data[child1]] ? child2 : child1;
+
+                if (weightArr[data[smallest]] < weightArr[data[currPos]]) {
+                    swapData(currPos, smallest);
+                    currPos = smallest;
+                    child1 = getChild(currPos, 1);
+                    child2 = getChild(currPos, 2);
+                }
+            } else if (child1 < size && weightArr[data[child1]] < weightArr[data[currPos]]) {
+                swapData(currPos, child1);
+                currPos = child1;
+                child1 = getChild(currPos, 1);
+                child2 = getChild(currPos, 2);
+            } else {
+                break;
+            }
+        }
+    }
+
+    void swapData(int parent, int child) {
+        int temp = data[parent];
+        data[parent] = data[child];
+        data[child] = temp;
     }
 
     static int getParent(int idx) {
