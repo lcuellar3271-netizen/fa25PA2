@@ -50,8 +50,8 @@ struct MinHeap {
         int currPos = pos;
         int child1 = getChild(currPos, 1);
         int child2 = getChild(currPos, 2);
-        while (child1 < size) {
-            if (child1 < size && child2 < size) {
+        while (exists(child1)) {
+            if (exists(child1) && exists(child2)) {
                 int smallest = weightArr[data[child2]] < weightArr[data[child1]] ? child2 : child1;
 
                 if (weightArr[data[smallest]] < weightArr[data[currPos]]) {
@@ -60,7 +60,7 @@ struct MinHeap {
                     child1 = getChild(currPos, 1);
                     child2 = getChild(currPos, 2);
                 }
-            } else if (child1 < size && weightArr[data[child1]] < weightArr[data[currPos]]) {
+            } else if (exists(child1) && weightArr[data[child1]] < weightArr[data[currPos]]) {
                 swapData(currPos, child1);
                 currPos = child1;
                 child1 = getChild(currPos, 1);
@@ -85,14 +85,19 @@ struct MinHeap {
         return idx * 2 + child;
     }
 
+    int exists(int node) const {
+        if (node < size) return 1;
+        return 0;
+    }
+
     int isValidMinHeap(int freq[]) {
         for (int i = 0; i < size; ++i) {
             int child1 = getChild(i, 1);
             int child2 = getChild(i, 2);
-            if (child1 < size && freq[data[i]] > freq[data[child1]]) {
+            if (exists(child1) && freq[data[i]] > freq[data[child1]]) {
                 return 0;
             }
-            if (child2 < size && freq[data[i]] > freq[data[child2]]) {
+            if (exists(child2) < size && freq[data[i]] > freq[data[child2]]) {
                 return 0;
             }
         }
