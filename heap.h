@@ -90,6 +90,16 @@ struct MinHeap {
         return 0;
     }
 
+    friend ostream& operator<<(ostream& os, const MinHeap& h) {
+        os << "MinHeap: ";
+        for (int i = 0; i < h.size; ++i) {
+            os << h.data[i] << ", ";
+        }
+        os << endl;
+
+        return os;
+    }
+
     int isValidMinHeap(int freq[]) {
         for (int i = 0; i < size; ++i) {
             int child1 = getChild(i, 1);
@@ -97,7 +107,7 @@ struct MinHeap {
             if (exists(child1) && freq[data[i]] > freq[data[child1]]) {
                 return 0;
             }
-            if (exists(child2) < size && freq[data[i]] > freq[data[child2]]) {
+            if (exists(child2) && freq[data[i]] > freq[data[child2]]) {
                 return 0;
             }
         }
