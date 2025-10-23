@@ -130,3 +130,17 @@ void encodeMessage(const string& filename, string codes[]) {
     cout << "\n";
     file.close();
 }
+
+void testHeap() {
+    MinHeap heap = MinHeap();
+    //0  1  2  3  4  5  6  7  8  9
+    int test[] = {2, 1, 4, 5, 3, 6, 9, 8, 7, 0};
+    for (int i = 0; i < 10; ++i) {
+        heap.push(i, test);
+    }
+    for (int i = 0; i < 13; ++i) {
+        cout << heap << endl;
+        cout << heap.pop(test) << endl;
+        cout << "Valid is: " << heap.isValidMinHeap(test) << endl;
+    }
+}
