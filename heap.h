@@ -25,6 +25,10 @@ struct MinHeap {
         // TODO: remove and return smallest index
         // Replace root with last element, then call downheap()
         if (size == 0) return -1;
+        if (size == 1) {
+            size = 0;
+            return data[0];
+        }
 
         int popValue = data[0];
         data[0] = data[size-1];
@@ -58,10 +62,12 @@ struct MinHeap {
 
                 if (weightArr[data[smallest]] < weightArr[data[currPos]]) {
                     swapData(currPos, smallest);
-                    currPos = smallest;
-                    child1 = getChild(currPos, 1);
-                    child2 = getChild(currPos, 2);
+                } else {
+                    break;
                 }
+                currPos = smallest;
+                child1 = getChild(currPos, 1);
+                child2 = getChild(currPos, 2);
             } else if (exists(child1) && weightArr[data[child1]] < weightArr[data[currPos]]) {
                 swapData(currPos, child1);
                 currPos = child1;
@@ -93,9 +99,17 @@ struct MinHeap {
     }
 
     friend ostream& operator<<(ostream& os, const MinHeap& h) {
-        os << "MinHeap: ";
+        os << "MinHeap: " << endl;
+        int count = 0;
+        int nextLevel = 1;
         for (int i = 0; i < h.size; ++i) {
             os << h.data[i] << ", ";
+            count++;
+            if (count == nextLevel) {
+                count = 0;
+                nextLevel *= 2;
+                cout << endl;
+            }
         }
         os << endl;
 
