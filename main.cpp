@@ -21,6 +21,9 @@ int createLeafNodes(int freq[]);
 int buildEncodingTree(int nextFree);
 void generateCodes(int root, string codes[]);
 void encodeMessage(const string& filename, string codes[]);
+template <typename T>
+void printArr(T arr[], int length);
+void testHeap();
 
 int main() {
     int freq[26] = {0};
@@ -33,6 +36,10 @@ int main() {
 
     // Step 3: Build encoding tree using your heap
     int root = buildEncodingTree(nextFree);
+    printArr(weightArr, MAX_NODES);
+    printArr(leftArr, MAX_NODES);
+    printArr(rightArr, MAX_NODES);
+    printArr(charArr, MAX_NODES);
 
     // Step 4: Generate binary codes using an STL stack
     string codes[26];
@@ -98,7 +105,25 @@ int buildEncodingTree(int nextFree) {
     //    - Set left/right pointers
     //    - Push new parent index back into the heap
     // 4. Return the index of the last remaining node (root)
-    return -1; // placeholder
+    MinHeap heap = MinHeap();
+    for (int i = 0; i < nextFree; ++i) {
+        heap.push(i, weightArr);
+    }
+    while (heap.size > 1) {
+        //cout << heap << endl;
+        if (nextFree > MAX_NODES) break;
+        int childIdx1 = heap.pop(weightArr);
+        int childIdx2 = heap.pop(weightArr);
+        leftArr[nextFree] = childIdx1;
+        rightArr[nextFree] = childIdx2;
+
+        int parentWeight = weightArr[childIdx1] + weightArr[childIdx2];
+        weightArr[nextFree] = parentWeight;
+        heap.push(nextFree, weightArr);
+        nextFree++;
+    }
+
+    return heap.pop(weightArr); // placeholder
 }
 
 // Step 4: Use an STL stack to generate codes
@@ -133,14 +158,22 @@ void encodeMessage(const string& filename, string codes[]) {
 
 void testHeap() {
     MinHeap heap = MinHeap();
-    //0  1  2  3  4  5  6  7  8  9
-    int test[] = {2, 1, 4, 5, 3, 6, 9, 8, 7, 0};
-    for (int i = 0; i < 10; ++i) {
+                //0  1  2  3  4  5  6  7  8  9  10  11  12  13  14
+    int test[] = {2, 1, 4, 5, 3, 6, 9, 8, 7, 0, 11, 12, 13, 14, 10};
+    for (int i = 0; i < 15; ++i) {
         heap.push(i, test);
     }
-    for (int i = 0; i < 13; ++i) {
+    for (int i = 0; i < 17; ++i) {
         cout << heap << endl;
         cout << heap.pop(test) << endl;
         cout << "Valid is: " << heap.isValidMinHeap(test) << endl;
     }
+}
+
+template <typename T>
+void printArr(T arr[], int length) {
+    for (int i = 0; i < length; ++i) {
+        cout << arr[i] << ", ";
+    }
+    cout << endl;
 }
