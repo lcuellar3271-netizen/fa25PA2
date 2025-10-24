@@ -36,10 +36,10 @@ int main() {
 
     // Step 3: Build encoding tree using your heap
     int root = buildEncodingTree(nextFree);
-    printArr(weightArr, MAX_NODES);
-    printArr(leftArr, MAX_NODES);
-    printArr(rightArr, MAX_NODES);
-    printArr(charArr, MAX_NODES);
+    // printArr(weightArr, MAX_NODES);
+    // printArr(leftArr, MAX_NODES);
+    // printArr(rightArr, MAX_NODES);
+    // printArr(charArr, MAX_NODES);
 
     // Step 4: Generate binary codes using an STL stack
     string codes[26];
@@ -140,7 +140,6 @@ void generateCodes(int root, string codes[]) {
         stck.pop();
         if (leftArr[idx] == -1 && rightArr[idx] == -1) {
             codes[charArr[idx] - 'a'] = code;
-            printArr(codes, 26);
         } else {
             if (rightArr[idx] != -1) {
                 stck.push({rightArr[idx], code + "1"});
