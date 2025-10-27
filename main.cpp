@@ -24,6 +24,7 @@ void encodeMessage(const string& filename, string codes[]);
 template <typename T>
 void printArr(T arr[], int length);
 void testHeap();
+void checkCode(string codes[]);
 
 int main() {
     int freq[26] = {0};
@@ -47,6 +48,8 @@ int main() {
 
     // Step 5: Encode the message and print output
     encodeMessage("input.txt", codes);
+
+    checkCode(codes);
 
     return 0;
 }
@@ -121,7 +124,6 @@ int buildEncodingTree(int nextFree) {
         heap.push(nextFree, weightArr);
         nextFree++;
     }
-
     return heap.pop(weightArr); // placeholder
 }
 
@@ -189,6 +191,28 @@ template <typename T>
 void printArr(T arr[], int length) {
     for (int i = 0; i < length; ++i) {
         cout << arr[i] << ", ";
+    }
+    cout << endl;
+}
+
+void checkCode(string codes[]) {
+    string code;
+    cout << "Enter code: ";
+    cin >> code;
+    int curr = 0;
+    int end = 1;
+    while (curr + end <= code.length()) {
+        for (int j = 0; j < 26; ++j) {
+            if (codes[j].empty()) continue;
+            //cout << "curr: " << curr << " end: " << end << ", " << code.substr(curr, end) << " AND " << codes[j] << endl;
+            if (code.substr(curr, end) == codes[j]) {
+                curr += end;
+                end = 0;
+                cout << static_cast<char>('a' + j);
+                break;
+            }
+        }
+        end++;
     }
     cout << endl;
 }
