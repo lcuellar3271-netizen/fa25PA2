@@ -173,6 +173,7 @@ void encodeMessage(const string& filename, string codes[]) {
     file.close();
 }
 
+// Method to test if the heap was maintaining proper heap structure
 void testHeap() {
     MinHeap heap = MinHeap();
                 //0  1  2  3  4  5  6  7  8  9  10  11  12  13  14
@@ -187,6 +188,12 @@ void testHeap() {
     }
 }
 
+/**
+ * Print an array csv style
+ * @tparam T the type of the array
+ * @param arr the array to print
+ * @param length the length of the array
+ */
 template <typename T>
 void printArr(T arr[], int length) {
     for (int i = 0; i < length; ++i) {
@@ -195,6 +202,10 @@ void printArr(T arr[], int length) {
     cout << endl;
 }
 
+/**
+ * Check that the program encodes properly by decoding
+ * @param codes the map of codes to their alphabetical values (done by index)
+ */
 void checkCode(string codes[]) {
     string code;
     cout << "Enter code: ";
